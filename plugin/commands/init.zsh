@@ -74,11 +74,8 @@ shakapawd_init() {
         done
 
         echo ""
-        if [[ -t 0 ]]; then
-            read -p "Select template (1-$template_count): " selection
-        else
-            read selection
-        fi
+        printf "Select template (1-$template_count): "
+        read selection
 
         if [[ ! "$selection" =~ ^[0-9]+$ ]] || \
            [[ $selection -lt 1 ]] || \
