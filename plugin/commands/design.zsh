@@ -47,6 +47,5 @@ shakapawd_design() {
     echo ""
     echo "Next steps:"
     echo "   • Get tech lead approval"
-    echo "   • Update STATUS.md with approval status"
     echo "   • Then: shakapawd tasks $feature_name"
 }

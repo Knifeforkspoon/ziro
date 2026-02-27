@@ -47,6 +47,5 @@ shakapawd_tasks() {
     echo ""
     echo "Next steps:"
     echo "   • Get team approval"
-    echo "   • Update STATUS.md with approval status"
     echo "   • Then: shakapawd build start $feature_name"
 }

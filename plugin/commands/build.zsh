@@ -92,7 +92,6 @@ _shakapawd_build_stop() {
     echo "Current progress saved in:"
     echo "   • $feature_dir/tasks.md (completed tasks marked)"
     echo "   • $feature_dir/.context.md (session notes)"
-    echo "   • $feature_dir/STATUS.md (progress tracking)"
     echo ""
     echo "Resume with: shakapawd build resume $feature_name"
 }
@@ -103,12 +102,6 @@ _shakapawd_build_status() {
 
     echo "📊 Build Status: $feature_name"
     echo ""
-
-    if [[ -f "$feature_dir/STATUS.md" ]]; then
-        echo "=== STATUS ==="
-        head -30 "$feature_dir/STATUS.md"
-        echo ""
-    fi
 
     if [[ -f "$feature_dir/tasks.md" ]]; then
         echo "=== TASK PROGRESS ==="
