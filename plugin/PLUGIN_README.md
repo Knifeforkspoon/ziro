@@ -62,9 +62,7 @@ shakapawd feature create tower-search
 Creates feature directory with:
 - `requirements.md` - What to build
 - `design.md` - How to build it
-- `tasks.md` - Implementation tasks
-- `.context.md` - Session history
-- `STATUS.md` - Progress tracking
+- `tasks.md` - Implementation tasks (Claude updates this with checkmarks)
 
 ### Edit Feature Specs
 

@@ -14,7 +14,6 @@ shakapawd_init() {
     fi
 
     # Dynamically discover available templates from plugin
-    local available_templates=()
     local plugin_templates_dir="$SHAKAPAWD_REPO_DIR/.shakapawed/templates"
 
     if [[ ! -d "$plugin_templates_dir" ]]; then
@@ -23,30 +22,40 @@ shakapawd_init() {
     fi
 
     # Scan for *-templates directories and extract template names
+    local available_templates=""
+    local template_count=0
+
     for template_dir in "$plugin_templates_dir"/*-templates; do
         if [[ -d "$template_dir" ]]; then
-            local template_name=$(basename "$template_dir" | sed 's/-templates$//')
-            available_templates+=("$template_name")
+            local template_name="${template_dir##*/}"
+            template_name="${template_name%-templates}"
+
+            if [[ -z "$available_templates" ]]; then
+                available_templates="$template_name"
+            else
+                available_templates="$available_templates $template_name"
+            fi
+            ((template_count++))
         fi
     done
 
     # If no templates found, error
-    if [[ ${#available_templates[@]} -eq 0 ]]; then
+    if [[ $template_count -eq 0 ]]; then
         echo "❌ No templates found in plugin"
         return 1
     fi
 
     # If template provided, validate it
     if [[ -n "$template" ]]; then
-        local valid=0
-        for t in "${available_templates[@]}"; do
+        local found=0
+        for t in $available_templates; do
             if [[ "$t" == "$template" ]]; then
-                valid=1
+                found=1
                 break
             fi
         done
 
-        if [[ $valid -eq 0 ]]; then
+        if [[ $found -eq 0 ]]; then
             echo "❌ Template '$template' not found"
             echo ""
             template=""
@@ -58,21 +67,35 @@ shakapawd_init() {
         echo "📦 Select template for Shakapawd initialization"
         echo ""
 
-        for i in "${!available_templates[@]}"; do
-            echo "  $((i+1))) ${available_templates[$i]}"
+        local idx=1
+        for t in $available_templates; do
+            echo "  $idx) $t"
+            ((idx++))
         done
 
         echo ""
-        read -p "Select template (1-${#available_templates[@]}): " selection
+        if [[ -t 0 ]]; then
+            read -p "Select template (1-$template_count): " selection
+        else
+            read selection
+        fi
 
         if [[ ! "$selection" =~ ^[0-9]+$ ]] || \
            [[ $selection -lt 1 ]] || \
-           [[ $selection -gt ${#available_templates[@]} ]]; then
+           [[ $selection -gt $template_count ]]; then
             echo "❌ Invalid selection"
             return 1
         fi
 
-        template="${available_templates[$((selection-1))]}"
+        # Extract the selected template
+        local idx=1
+        for t in $available_templates; do
+            if [[ $idx -eq $selection ]]; then
+                template="$t"
+                break
+            fi
+            ((idx++))
+        done
     fi
 
     echo ""

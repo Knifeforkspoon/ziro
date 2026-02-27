@@ -71,39 +71,6 @@ shakapawd_feature() {
                 echo "✅ Created tasks.md"
             fi
 
-            # Create status file
-            cat > "$feature_dir/STATUS.md" << 'EOF'
-# Feature Status
-
-## Progress
-
-- [ ] Phase 1: Requirements
-  - [ ] Requirements written
-  - [ ] Stakeholder approval
-
-- [ ] Phase 2: Design
-  - [ ] Design document written
-  - [ ] Tech lead approval
-
-- [ ] Phase 3: Tasks
-  - [ ] Tasks broken down
-  - [ ] Team approval
-
-- [ ] Phase 4: Implementation
-  - [ ] All tasks completed
-  - [ ] Tests passing
-  - [ ] Code reviewed
-
-## Current Phase
-
-Phase 1: Requirements (in progress)
-
-## Notes
-
-Add implementation notes here.
-
-EOF
-            echo "📊 Created STATUS.md"
 
             echo ""
             echo "✅ Feature '$feature_name' created successfully!"
