@@ -36,16 +36,30 @@ shakapawd_tasks() {
         return 1
     fi
 
-    echo "✅ Editing tasks for: $feature_name"
-    echo "   File: $tasks_file"
+    echo "✅ Creating tasks for: $feature_name"
     echo ""
 
-    ${EDITOR:-vim} "$tasks_file"
+    # Build Claude prompt for interactive tasks creation
+    local claude_prompt=$(cat <<EOF
+You are guiding the creation of implementation tasks using the Shakapawd process.
 
-    echo ""
-    echo "✅ Tasks updated"
-    echo ""
-    echo "Next steps:"
-    echo "   • Get team approval"
-    echo "   • Then: shakapawd build start $feature_name"
+Read $shakapawd_dir/GETTING_STARTED.md for process guidance.
+Read $feature_dir/requirements.md and $feature_dir/design.md for context on this feature.
+
+Help the user create a tasks.md file for: **$feature_name**
+
+Conduct an interactive conversation to break down the work into phases and tasks, then output the complete tasks.md file.
+
+Output format:
+\`\`\`markdown
+### FILE: tasks.md
+[complete tasks.md content]
+\`\`\`
+
+Start the interactive conversation now.
+EOF
+)
+
+            # Invoke Claude interactively
+            echo "$claude_prompt" | claude
 }

@@ -28,56 +28,29 @@ shakapawd_feature() {
                 return 1
             fi
 
-            echo "🎯 Creating feature spec: $feature_name"
-
-            # Create feature directory
-            mkdir -p "$feature_dir"
-            echo "📁 Created $feature_dir"
-
-            # Determine which templates to use
-            local fe_templates="$templates_dir/front-end-templates"
-            local be_templates="$templates_dir/back-end-templates"
-
-            # Copy requirements
-            if [[ -f "$fe_templates/requirements_template_frontend.md" ]]; then
-                cp "$fe_templates/requirements_template_frontend.md" \
-                   "$feature_dir/requirements.md"
-                echo "📋 Created requirements.md"
-            elif [[ -f "$templates_dir/requirements_template.md" ]]; then
-                cp "$templates_dir/requirements_template.md" \
-                   "$feature_dir/requirements.md"
-                echo "📋 Created requirements.md"
-            fi
-
-            # Copy design
-            if [[ -f "$fe_templates/design_template_sveltekit.md" ]]; then
-                cp "$fe_templates/design_template_sveltekit.md" \
-                   "$feature_dir/design.md"
-                echo "📐 Created design.md"
-            elif [[ -f "$templates_dir/design_template.md" ]]; then
-                cp "$templates_dir/design_template.md" \
-                   "$feature_dir/design.md"
-                echo "📐 Created design.md"
-            fi
-
-            # Copy tasks
-            if [[ -f "$fe_templates/tasks_template_frontend.md" ]]; then
-                cp "$fe_templates/tasks_template_frontend.md" \
-                   "$feature_dir/tasks.md"
-                echo "✅ Created tasks.md"
-            elif [[ -f "$templates_dir/tasks_template.md" ]]; then
-                cp "$templates_dir/tasks_template.md" \
-                   "$feature_dir/tasks.md"
-                echo "✅ Created tasks.md"
-            fi
-
-
+            echo "🎯 Creating feature: $feature_name"
             echo ""
-            echo "✅ Feature '$feature_name' created successfully!"
-            echo ""
-            echo "📝 Next steps:"
-            echo "   1. Edit: shakapawd design $feature_name"
-            echo "   2. Or manually: $feature_dir/requirements.md"
+
+            # Build Claude prompt for interactive feature creation
+            local claude_prompt=$(cat <<EOF
+You are guiding the creation of a new feature using the Shakapawd process.
+
+Read $shakapawd_dir/GETTING_STARTED.md for process guidance, then help the user create a feature specification for: **$feature_name**
+
+Conduct an interactive conversation to gather requirements, then output the complete requirements.md file.
+
+Output format:
+\`\`\`markdown
+### FILE: requirements.md
+[complete requirements.md content]
+\`\`\`
+
+Start the interactive conversation now.
+EOF
+)
+
+            # Invoke Claude interactively
+            echo "$claude_prompt" | claude
             ;;
 
         edit)
