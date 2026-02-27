@@ -3,8 +3,8 @@
 
 # Get list of available features
 _shakapawd_get_features() {
-    if [[ -d .shakapawed/specs ]]; then
-        ls -1 .shakapawed/specs 2>/dev/null | grep -v "^\.gitkeep$"
+    if [[ -d .shakapawd/specs ]]; then
+        ls -1 .shakapawd/specs 2>/dev/null | grep -v "^\.gitkeep$"
     fi
 }
 

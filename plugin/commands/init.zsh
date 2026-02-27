@@ -3,7 +3,7 @@
 
 shakapawd_init() {
     local template=${1}
-    local shakapawd_dir=".shakapawed"
+    local shakapawd_dir=".shakapawd"
     local templates_dir="$shakapawd_dir/templates"
     local specs_dir="$shakapawd_dir/specs"
 
@@ -14,7 +14,7 @@ shakapawd_init() {
     fi
 
     # Dynamically discover available templates from plugin
-    local plugin_templates_dir="$SHAKAPAWD_REPO_DIR/.shakapawed/templates"
+    local plugin_templates_dir="$SHAKAPAWD_REPO_DIR/.shakapawd/templates"
 
     if [[ ! -d "$plugin_templates_dir" ]]; then
         echo "❌ Templates directory not found in plugin"
@@ -109,7 +109,7 @@ shakapawd_init() {
             mkdir -p "$templates_dir/front-end-templates"
 
             # Copy from plugin templates
-            local plugin_templates="$SHAKAPAWD_REPO_DIR/.shakapawed/templates/front-end-templates"
+            local plugin_templates="$SHAKAPAWD_REPO_DIR/.shakapawd/templates/front-end-templates"
 
             if [[ -d "$plugin_templates" ]]; then
                 cp "$plugin_templates/requirements_template_frontend.md" \
@@ -121,14 +121,14 @@ shakapawd_init() {
             fi
 
             # Copy guide
-            if [[ -f "$SHAKAPAWD_REPO_DIR/.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md" ]]; then
-                cp "$SHAKAPAWD_REPO_DIR/.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md" \
+            if [[ -f "$SHAKAPAWD_REPO_DIR/.shakapawd/templates/FRONTEND_TEMPLATES_GUIDE.md" ]]; then
+                cp "$SHAKAPAWD_REPO_DIR/.shakapawd/templates/FRONTEND_TEMPLATES_GUIDE.md" \
                    "$templates_dir/"
             fi
 
             # Copy getting started
-            if [[ -f "$SHAKAPAWD_REPO_DIR/.shakapawed/GETTING_STARTED.md" ]]; then
-                cp "$SHAKAPAWD_REPO_DIR/.shakapawed/GETTING_STARTED.md" \
+            if [[ -f "$SHAKAPAWD_REPO_DIR/.shakapawd/GETTING_STARTED.md" ]]; then
+                cp "$SHAKAPAWD_REPO_DIR/.shakapawd/GETTING_STARTED.md" \
                    "$shakapawd_dir/"
             fi
 

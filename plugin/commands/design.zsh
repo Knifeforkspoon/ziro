@@ -4,7 +4,7 @@
 shakapawd_design() {
     local feature_name=${1}
     local action=${2}
-    local shakapawd_dir=".shakapawed"
+    local shakapawd_dir=".shakapawd"
     local specs_dir="$shakapawd_dir/specs"
 
     # Validate shakapawd is initialized

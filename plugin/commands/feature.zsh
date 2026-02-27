@@ -4,7 +4,7 @@
 shakapawd_feature() {
     local action=${1:-create}
     local feature_name=${2}
-    local shakapawd_dir=".shakapawed"
+    local shakapawd_dir=".shakapawd"
     local specs_dir="$shakapawd_dir/specs"
     local templates_dir="$shakapawd_dir/templates"
 

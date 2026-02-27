@@ -4,7 +4,7 @@
 shakapawd_build() {
     local action=${1:-start}
     local feature_name=${2}
-    local shakapawd_dir=".shakapawed"
+    local shakapawd_dir=".shakapawd"
     local specs_dir="$shakapawd_dir/specs"
 
     # Validate shakapawd is initialized
@@ -160,8 +160,8 @@ You are implementing a feature using the Shakapawd spec-driven development syste
 Follow the Shakapawd process defined in this project:
 - Read and understand requirements.md, design.md, and tasks.md
 - Implement the current task exactly as specified
-- Create/modify files in ./src/ (not .shakapawed/)
-- After implementing, update .shakapawed/specs/$feature_name/.context.md with:
+- Create/modify files in ./src/ (not .shakapawd/)
+- After implementing, update .shakapawd/specs/$feature_name/.context.md with:
   - What you implemented (summary)
   - Key decisions made
   - Any blockers or issues

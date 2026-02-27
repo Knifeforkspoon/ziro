@@ -2,7 +2,7 @@
 # shakapawd list - List all feature specs with status
 
 shakapawd_list() {
-    local shakapawd_dir=".shakapawed"
+    local shakapawd_dir=".shakapawd"
     local specs_dir="$shakapawd_dir/specs"
 
     # Validate shakapawd is initialized

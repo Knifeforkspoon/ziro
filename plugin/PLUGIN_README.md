@@ -48,7 +48,7 @@ shakapawd init invalid-template
 # Select template (1-2):
 ```
 
-Creates `.shakapawed/` directory with:
+Creates `.shakapawd/` directory with:
 - `specs/` - Feature specifications
 - `templates/` - Spec templates
 - Documentation
