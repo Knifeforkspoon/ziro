@@ -47,7 +47,6 @@ Instead of jumping straight into code, you plan everything out first. Each phase
 - Create technical design addressing all requirements
 - Define components, interfaces, and data models
 - Plan error handling and testing strategy
-- Include architecture diagrams
 - Iterate until approved
 
 ### Phase 3: Tasks
@@ -74,89 +73,24 @@ The front-end templates are customized for **SvelteKit** projects with the follo
 - **Zod** - Validation
 - **Vitest** - Testing
 
-### Design Template Sections
+## Oh-My-Zsh Plugin
 
-The front-end design template includes:
-1. **Architecture** - High-level system design
-2. **Components** - UI component structure and interfaces
-3. **Data Flow** - SvelteKit remote functions → services → API client pattern
-4. **State Management** - Svelte stores and context approach
-5. **Authentication** - Auth.js integration with Keycloak
-6. **API Integration** - Orval-generated client usage
-7. **Forms & Validation** - Superforms + Zod patterns
-8. **Mapping & Geolocation** - MapLibre GL and Turf.js integration
-9. **Testing** - Client and server test strategies
-10. **Error Handling** - Component boundaries and error recovery
-11. **Performance** - Optimization strategies for SvelteKit
+Shakapawd includes a **Zsh shell plugin** that integrates spec-driven development directly into your terminal. The plugin provides commands to:
+- Initialize Shakapawd in any project
+- Create and manage features
+- Edit specs with your preferred editor
+- Execute implementation tasks with human-in-the-loop automation
+- Track progress across features
 
-## Using Shakapawd
+See the **[Plugin Documentation](./plugin/PLUGIN_README.md)** for installation and usage.
 
-### Starting a New Feature
+## Documentation
 
-1. **Create feature directory**: `.shakapawed/specs/{feature-name}/`
-2. **Copy templates**: From `.shakapawed/templates/front-end-templates/`
-3. **Fill requirements.md** - Document what needs to be built
-4. **Get approval** - User reviews and approves requirements
-5. **Fill design.md** - Create technical architecture
-6. **Get approval** - User reviews and approves design
-7. **Fill tasks.md** - Break into actionable tasks
-8. **Get approval** - User reviews and approves tasks
-9. **Implement** - Execute tasks with Claude Code
+For detailed information about Shakapawd, see:
 
-### Approval Process
-
-Each document needs explicit approval before proceeding:
-- ✅ Requirements approved → start design
-- ✅ Design approved → start tasks
-- ✅ Tasks approved → start implementation
-
-No skipping phases. This ensures quality and clarity.
-
-## Template Customization
-
-### For Your Project
-
-1. Review the templates in `.shakapawed/templates/front-end-templates/`
-2. Customize the tech stack references to match your project
-3. Update examples with your patterns and conventions
-4. Keep templates in sync with actual implementation patterns
-
-### For New Stack
-
-When adding backend templates or other stacks:
-1. Create new directory: `.shakapawed/templates/{stack-templates}/`
-2. Copy and customize the base templates
-3. Reference your specific tech stack and patterns
-4. Document any custom behaviors
-
-## Why This Works
-
-Shakapawd works because:
-- **Clear requirements** validate against user needs
-- **Detailed design** prevents rework during implementation
-- **Specific tasks** keep implementation focused
-- **Traceability** connects code back to requirements
-- **Structured phases** reduce decision fatigue
-
-Claude Code can work incrementally and systematically when given:
-- Complete requirements upfront
-- Detailed technical design
-- Specific, actionable tasks
-- Clear acceptance criteria
-
-## Documentation Files
-
-- **requirements_template.md** - Template for documenting what to build
-- **design_template.md** - Template for technical architecture (SvelteKit-focused)
-- **tasks_template.md** - Template for breaking design into tasks
-
-## Getting Started
-
-1. Read this README
-2. Check out `.shakapawed/templates/front-end-templates/`
-3. Create your first feature in `.shakapawed/specs/{feature-name}/`
-4. Copy templates and fill them out
-5. Use Claude Code to implement with `bun --bun run` commands
+- **[System Overview](./docs/SHAKAPAWD_SYSTEM_OVERVIEW.md)** - Complete system architecture, templates, and workflows
+- **[How Kiro Works](./docs/how_kiro_works.md)** - Understanding the Kiro methodology that Shakapawd is based on
+- **[Claude Code + Kiro Integration](./docs/claude_agnostic.md)** - Guide for integrating Kiro system into your project's CLAUDE.md
 
 ---
 
