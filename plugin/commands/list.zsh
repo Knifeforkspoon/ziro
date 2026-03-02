@@ -1,13 +1,13 @@
 #!/usr/bin/env zsh
-# shakapawd list - List all feature specs with status
+# ziro ls - List all feature specs with status
 
-shakapawd_list() {
-    local shakapawd_dir=".shakapawd"
-    local specs_dir="$shakapawd_dir/specs"
+ziro_list() {
+    local ziro_dir=".ziro"
+    local specs_dir="$ziro_dir/specs"
 
-    # Validate shakapawd is initialized
-    if [[ ! -d "$shakapawd_dir" ]]; then
-        echo "❌ Shakapawd not initialized. Run: shakapawd init"
+    # Validate ziro is initialized
+    if [[ ! -d "$ziro_dir" ]]; then
+        echo "❌ Ziro not initialized. Run: ziro init"
         return 1
     fi
 
@@ -20,11 +20,11 @@ shakapawd_list() {
     if ! ls -1 "$specs_dir" 2>/dev/null | grep -v "^\.gitkeep$" | grep -q .; then
         echo "📭 No features found"
         echo ""
-        echo "Create one: shakapawd feature create [name]"
+        echo "Create one: ziro req create [name]"
         return 0
     fi
 
-    echo "📋 Shakapawd Features"
+    echo "📋 Ziro Features"
     echo ""
 
     # List all features with status
@@ -86,7 +86,7 @@ shakapawd_list() {
     echo "        ✓=Approved  ◐=Draft  ❌=Not Started"
     echo ""
     echo "Commands:"
-    echo "  shakapawd feature create [name]   - Create new feature"
-    echo "  shakapawd design [name]           - Edit design"
-    echo "  shakapawd build start [name]      - Start implementation"
+    echo "  ziro req create [name]      - Gather requirements"
+    echo "  ziro plan create [name]     - Create design"
+    echo "  ziro ralph start [name]     - Start implementation"
 }

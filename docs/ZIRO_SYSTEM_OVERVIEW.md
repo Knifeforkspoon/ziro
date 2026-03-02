@@ -1,12 +1,12 @@
-# Shakapawd System Overview
+# Ziro System Overview
 
-Shakapawd is a spec-driven development system built for SvelteKit-based applications. It adapts Amazon's Kiro methodology with customized templates and workflows for systematic feature development.
+Ziro is a zero-friction spec-driven development system built for SvelteKit-based applications. It adapts Amazon's Kiro methodology with customized templates and workflows for systematic feature development.
 
 ## System Philosophy
 
-**Build with structure, not chaos.**
+**Zero friction. Zero ambiguity. Zero wasted effort.**
 
-Instead of jumping to code, Shakapawd guides you through three explicit phases:
+Instead of jumping to code, Ziro guides you through three explicit phases:
 
 1. **Requirements** - What needs to be built (user stories, acceptance criteria)
 2. **Design** - How it will be built (architecture, components, data flow)
@@ -27,10 +27,10 @@ Each phase requires explicit approval before moving to the next.
 ### Directory Structure
 
 ```
-shakapawd/
+ziro/
 ├── README.md                           # System overview
-├── SHAKAPAWD_SYSTEM_OVERVIEW.md       # This file
-├── .shakapawed/
+├── ZIRO_SYSTEM_OVERVIEW.md            # This file
+├── .ziro/
 │   ├── GETTING_STARTED.md             # Quick start guide
 │   ├── specs/                         # Feature specifications
 │   │   └── {feature-name}/           # Individual features
@@ -53,7 +53,7 @@ shakapawd/
 
 ### Frontend Requirements Template
 
-**File**: `.shakapawed/templates/front-end-templates/requirements_template_frontend.md`
+**File**: `.ziro/templates/front-end-templates/requirements_template_frontend.md`
 
 **Purpose**: Document what needs to be built from user perspective
 
@@ -69,7 +69,7 @@ shakapawd/
 
 ### SvelteKit Design Template
 
-**File**: `.shakapawed/templates/front-end-templates/design_template_sveltekit.md`
+**File**: `.ziro/templates/front-end-templates/design_template_sveltekit.md`
 
 **Purpose**: Define technical architecture and implementation approach
 
@@ -90,7 +90,7 @@ shakapawd/
 
 ### Frontend Tasks Template
 
-**File**: `.shakapawed/templates/front-end-templates/tasks_template_frontend.md`
+**File**: `.ziro/templates/front-end-templates/tasks_template_frontend.md`
 
 **Purpose**: Break design into actionable coding tasks
 
@@ -115,7 +115,7 @@ shakapawd/
 
 ## Tech Stack
 
-Shakapawd is customized for:
+Ziro is customized for:
 
 - **SvelteKit 2.x** - Full-stack framework
 - **Svelte 5** - Component framework with reactive primitives
@@ -130,11 +130,11 @@ Shakapawd is customized for:
 - **Vitest** - Testing framework
 - **Bun** - Package manager
 
-## How to Use Shakapawd
+## How to Use Ziro
 
 ### 1. Read the Documentation
 
-Start with: `.shakapawed/GETTING_STARTED.md`
+Start with: `.ziro/GETTING_STARTED.md`
 
 This guide walks through the entire process:
 - What each phase is
@@ -144,7 +144,7 @@ This guide walks through the entire process:
 
 ### 2. Review Template Guide
 
-Read: `.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md`
+Read: `.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md`
 
 Explains:
 - What each template covers
@@ -155,17 +155,17 @@ Explains:
 ### 3. Create a New Feature
 
 ```bash
-mkdir -p .shakapawed/specs/{feature-name}
+mkdir -p .ziro/specs/{feature-name}
 ```
 
 Copy templates:
 ```bash
-cp .shakapawed/templates/front-end-templates/requirements_template_frontend.md \
-   .shakapawed/specs/{feature-name}/requirements.md
-cp .shakapawed/templates/front-end-templates/design_template_sveltekit.md \
-   .shakapawed/specs/{feature-name}/design.md
-cp .shakapawed/templates/front-end-templates/tasks_template_frontend.md \
-   .shakapawed/specs/{feature-name}/tasks.md
+cp .ziro/templates/front-end-templates/requirements_template_frontend.md \
+   .ziro/specs/{feature-name}/requirements.md
+cp .ziro/templates/front-end-templates/design_template_sveltekit.md \
+   .ziro/specs/{feature-name}/design.md
+cp .ziro/templates/front-end-templates/tasks_template_frontend.md \
+   .ziro/specs/{feature-name}/tasks.md
 ```
 
 ### 4. Phase 1: Requirements
@@ -272,7 +272,7 @@ Everything is documented:
 - Complex forms? Add form-specific sections
 - Real-time data? Add WebSocket sections
 
-See `.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md` for customization examples.
+See `.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md` for customization examples.
 
 ## Benefits
 
@@ -325,26 +325,26 @@ bun run refresh-api-client
 
 ## File Locations
 
-- **Features**: `.shakapawed/specs/{feature-name}/`
-- **Frontend Templates**: `.shakapawed/templates/front-end-templates/`
-- **Getting Started**: `.shakapawed/GETTING_STARTED.md`
-- **Template Guide**: `.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md`
-- **This Overview**: `SHAKAPAWD_SYSTEM_OVERVIEW.md`
+- **Features**: `.ziro/specs/{feature-name}/`
+- **Frontend Templates**: `.ziro/templates/front-end-templates/`
+- **Getting Started**: `.ziro/GETTING_STARTED.md`
+- **Template Guide**: `.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md`
+- **This Overview**: `ZIRO_SYSTEM_OVERVIEW.md`
 - **Main README**: `README.md`
 
 ## Next Steps
 
-1. **Read**: `.shakapawed/GETTING_STARTED.md` (5 min read)
-2. **Understand**: `.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md` (10 min read)
-3. **Create**: First feature in `.shakapawed/specs/{feature-name}/`
-4. **Follow**: Phase 1 → Phase 2 → Phase 3 → Implementation
+1. **Read**: `.ziro/GETTING_STARTED.md` (5 min read)
+2. **Understand**: `.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md` (10 min read)
+3. **Create**: First feature in `.ziro/specs/{feature-name}/`
+4. **Follow**: Phase 1 → Phase 2 → Phase 3 → The Wiggum Loop
 
 ## Example Feature Spec
 
 After creating a feature, structure looks like:
 
 ```
-.shakapawed/specs/tower-search/
+.ziro/specs/tower-search/
 ├── requirements.md  ← What to build
 ├── design.md       ← How to build it
 └── tasks.md        ← Step by step implementation
@@ -386,12 +386,12 @@ src/
 - Main README
 
 ✅ **Directory Structure**
-- `.shakapawed/specs/` for features
-- `.shakapawed/templates/` for templates
+- `.ziro/specs/` for features
+- `.ziro/templates/` for templates
 - Organized by frontend specialization
 
 🔄 **Future**
-- Back-end templates (`.shakapawed/templates/back-end-templates/`)
+- Back-end templates (`.ziro/templates/back-end-templates/`)
 - Database schema templates
 - API design templates
 - Testing pattern templates
@@ -399,13 +399,13 @@ src/
 ## Support
 
 For questions about:
-- **Getting started**: Read `.shakapawed/GETTING_STARTED.md`
-- **Templates**: Read `.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md`
+- **Getting started**: Read `.ziro/GETTING_STARTED.md`
+- **Templates**: Read `.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md`
 - **System**: Read this overview document
 - **Generic Kiro**: Read `claude_agnostic.md`
 
 ---
 
-**Shakapawd**: Systematic feature development through spec-driven planning and templated implementation.
+**Ziro**: Zero-friction spec-driven development through spec-driven planning and templated implementation.
 
 Built on Amazon's Kiro methodology, customized for SvelteKit.

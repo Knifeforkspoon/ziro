@@ -1,6 +1,6 @@
 # SvelteKit Frontend Templates Guide
 
-This guide explains how to use the Shakapawd frontend templates for building SvelteKit features with the structured spec-driven approach.
+This guide explains how to use the Ziro frontend templates for building SvelteKit features with the structured spec-driven approach.
 
 ## What's in the Frontend Templates
 
@@ -114,8 +114,8 @@ The frontend templates are specifically customized for SvelteKit applications wi
 ### Step 1: Set Up Directory
 
 ```bash
-mkdir -p .shakapawed/specs/{feature-name}
-cd .shakapawed/specs/{feature-name}
+mkdir -p .ziro/specs/{feature-name}
+cd .ziro/specs/{feature-name}
 ```
 
 ### Step 2: Copy Templates
@@ -219,7 +219,7 @@ Link to your project's architecture documentation and coding standards.
 When you complete a feature spec, your directory looks like:
 
 ```
-.shakapawed/
+.ziro/
 └── specs/
     └── tower-search/
         ├── requirements.md      ✓ Approved
@@ -361,7 +361,7 @@ In tasks:
 ## Quick Reference: Template Locations
 
 ```
-.shakapawed/templates/front-end-templates/
+.ziro/templates/front-end-templates/
 ├── requirements_template_frontend.md    # What to build
 ├── design_template_sveltekit.md        # How to build it
 └── tasks_template_frontend.md          # Step-by-step tasks
@@ -409,7 +409,7 @@ Create subtasks:
 ## Next Steps
 
 1. Choose a feature to build
-2. Create `.shakapawed/specs/{feature-name}/`
+2. Create `.ziro/specs/{feature-name}/`
 3. Copy the three templates
 4. Fill out requirements.md
 5. Share with team for approval

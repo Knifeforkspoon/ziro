@@ -1,10 +1,10 @@
-# Getting Started with Shakapawd
+# Getting Started with Ziro
 
-Welcome to Shakapawd - the spec-driven development system for building features systematically.
+Welcome to Ziro - the zero-friction spec-driven development system for building features systematically.
 
-## What is Shakapawd?
+## What is Ziro?
 
-Shakapawd is a structured approach to building frontend features using three phases:
+Ziro is a structured approach to building frontend features using three phases:
 
 1. **Requirements** - Document what needs to be built
 2. **Design** - Plan how to build it
@@ -15,7 +15,7 @@ Each phase requires approval before moving to the next, ensuring quality and cla
 ## Directory Structure
 
 ```
-.shakapawed/
+.ziro/
 ├── specs/                              # Your feature specifications
 │   └── {feature-name}/                 # Individual features
 │       ├── requirements.md             # Phase 1: What to build
@@ -33,7 +33,7 @@ Each phase requires approval before moving to the next, ensuring quality and cla
 
 ### 1. Read the Frontend Templates Guide
 
-Start here: `.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md`
+Start here: `.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md`
 
 This explains:
 - What each template is for
@@ -43,8 +43,8 @@ This explains:
 ### 2. Create a Feature Directory
 
 ```bash
-mkdir -p .shakapawed/specs/my-feature
-cd .shakapawed/specs/my-feature
+mkdir -p .ziro/specs/my-feature
+cd .ziro/specs/my-feature
 ```
 
 ### 3. Copy the Templates
@@ -281,7 +281,7 @@ Implementation
 Example structure after completing a feature:
 
 ```
-.shakapawed/specs/tower-search/
+.ziro/specs/tower-search/
 ├── requirements.md  ✓ Approved
 ├── design.md       ✓ Approved
 └── tasks.md        ✓ Approved
@@ -408,7 +408,7 @@ Read `FRONTEND_TEMPLATES_GUIDE.md` for:
 
 ### Real Examples
 
-Look for existing specs in `.shakapawed/specs/` to see:
+Look for existing specs in `.ziro/specs/` to see:
 - How other features documented requirements
 - How design docs are organized
 - How tasks are broken down
@@ -416,7 +416,7 @@ Look for existing specs in `.shakapawed/specs/` to see:
 ## Next Steps
 
 1. Choose a feature to build
-2. Create `.shakapawed/specs/{feature-name}/`
+2. Create `.ziro/specs/{feature-name}/`
 3. Copy templates
 4. Fill in requirements.md
 5. Get approval from stakeholder
@@ -428,8 +428,8 @@ Look for existing specs in `.shakapawed/specs/` to see:
 
 ---
 
-**Start with**: `.shakapawed/templates/FRONTEND_TEMPLATES_GUIDE.md`
+**Start with**: `.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md`
 
-**Then create your first feature**: `.shakapawed/specs/{your-feature-name}/`
+**Then create your first feature**: `.ziro/specs/{your-feature-name}/`
 
-*Shakapawd: Systematic feature development through structured specs and templates.*
+*Ziro: Zero-friction spec-driven development through structured specs and templates.*

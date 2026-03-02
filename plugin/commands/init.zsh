@@ -1,20 +1,20 @@
 #!/usr/bin/env zsh
-# shakapawd init - Initialize shakapawd in current repo
+# ziro init - Initialize ziro in current repo
 
-shakapawd_init() {
+ziro_init() {
     local template=${1}
-    local shakapawd_dir=".shakapawd"
-    local templates_dir="$shakapawd_dir/templates"
-    local specs_dir="$shakapawd_dir/specs"
+    local ziro_dir=".ziro"
+    local templates_dir="$ziro_dir/templates"
+    local specs_dir="$ziro_dir/specs"
 
     # Check if already initialized
-    if [[ -d "$shakapawd_dir" ]]; then
-        echo "❌ Shakapawd already initialized in $shakapawd_dir"
+    if [[ -d "$ziro_dir" ]]; then
+        echo "❌ Ziro already initialized in $ziro_dir"
         return 1
     fi
 
     # Dynamically discover available templates from plugin
-    local plugin_templates_dir="$SHAKAPAWD_REPO_DIR/.shakapawd/templates"
+    local plugin_templates_dir="$ZIRO_REPO_DIR/.ziro/templates"
 
     if [[ ! -d "$plugin_templates_dir" ]]; then
         echo "❌ Templates directory not found in plugin"
@@ -64,7 +64,7 @@ shakapawd_init() {
 
     # If no valid template, show menu
     if [[ -z "$template" ]]; then
-        echo "📦 Select template for Shakapawd initialization"
+        echo "📦 Select template for Ziro initialization"
         echo ""
 
         local idx=1
@@ -96,7 +96,7 @@ shakapawd_init() {
     fi
 
     echo ""
-    echo "📦 Initializing Shakapawd with $template templates..."
+    echo "📦 Initializing Ziro with $template templates..."
 
     # Create directory structure
     mkdir -p "$specs_dir"
@@ -109,7 +109,7 @@ shakapawd_init() {
             mkdir -p "$templates_dir/front-end-templates"
 
             # Copy from plugin templates
-            local plugin_templates="$SHAKAPAWD_REPO_DIR/.shakapawd/templates/front-end-templates"
+            local plugin_templates="$ZIRO_REPO_DIR/.ziro/templates/front-end-templates"
 
             if [[ -d "$plugin_templates" ]]; then
                 cp "$plugin_templates/requirements_template_frontend.md" \
@@ -121,15 +121,15 @@ shakapawd_init() {
             fi
 
             # Copy guide
-            if [[ -f "$SHAKAPAWD_REPO_DIR/.shakapawd/templates/FRONTEND_TEMPLATES_GUIDE.md" ]]; then
-                cp "$SHAKAPAWD_REPO_DIR/.shakapawd/templates/FRONTEND_TEMPLATES_GUIDE.md" \
+            if [[ -f "$ZIRO_REPO_DIR/.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md" ]]; then
+                cp "$ZIRO_REPO_DIR/.ziro/templates/FRONTEND_TEMPLATES_GUIDE.md" \
                    "$templates_dir/"
             fi
 
             # Copy getting started
-            if [[ -f "$SHAKAPAWD_REPO_DIR/.shakapawd/GETTING_STARTED.md" ]]; then
-                cp "$SHAKAPAWD_REPO_DIR/.shakapawd/GETTING_STARTED.md" \
-                   "$shakapawd_dir/"
+            if [[ -f "$ZIRO_REPO_DIR/.ziro/GETTING_STARTED.md" ]]; then
+                cp "$ZIRO_REPO_DIR/.ziro/GETTING_STARTED.md" \
+                   "$ziro_dir/"
             fi
 
             echo "✓ Front-end templates ready"
@@ -151,10 +151,10 @@ shakapawd_init() {
     touch "$specs_dir/.gitkeep"
 
     echo ""
-    echo "✅ Shakapawd initialized successfully!"
+    echo "✅ Ziro initialized successfully!"
     echo ""
     echo "📖 Next steps:"
-    echo "   1. Read: $shakapawd_dir/GETTING_STARTED.md"
-    echo "   2. Create feature: shakapawd feature create my-feature"
+    echo "   1. Read: $ziro_dir/GETTING_STARTED.md"
+    echo "   2. Create feature: ziro req create my-feature"
     echo "   3. View templates: ls -la $templates_dir/"
 }

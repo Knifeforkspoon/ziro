@@ -1,17 +1,17 @@
 #!/usr/bin/env zsh
-# shakapawd tasks - Create tasks.md for a feature
+# ziro step - Create tasks.md for a feature
 
 source "${0:h}/utils.zsh"
 
-shakapawd_tasks_create() {
+ziro_step_create() {
     local feature_name=$1
-    local specs_dir=".shakapawd/specs"
+    local specs_dir=".ziro/specs"
     local feature_dir="$specs_dir/$feature_name"
 
-    shakapawd_validate_feature "$feature_name" "tasks create" || return 1
+    ziro_validate_feature "$feature_name" "step create" || return 1
 
     local design_file="$feature_dir/design.md"
-    shakapawd_check_dependency "$design_file" "Design" "$2" || return 1
+    ziro_check_dependency "$design_file" "Design" "$2" || return 1
 
     echo "✅ Creating tasks for: $feature_name"
     echo ""
@@ -20,7 +20,7 @@ shakapawd_tasks_create() {
     claude_prompt=$(cat <<EOF
 You are guiding the creation of implementation tasks using the Shakapawd process.
 
-Read .shakapawd/GETTING_STARTED.md for process guidance.
+Read .ziro/GETTING_STARTED.md for process guidance.
 Read $feature_dir/requirements.md and $feature_dir/design.md for context on this feature.
 
 Help the user create a tasks.md file for: **$feature_name**
@@ -40,15 +40,15 @@ EOF
     echo "$claude_prompt" | claude
 }
 
-shakapawd_tasks_edit() {
+ziro_step_edit() {
     local feature_name=$1
-    local specs_dir=".shakapawd/specs"
+    local specs_dir=".ziro/specs"
     local feature_dir="$specs_dir/$feature_name"
 
-    shakapawd_validate_feature "$feature_name" "tasks edit" || return 1
+    ziro_validate_feature "$feature_name" "step edit" || return 1
 
     local tasks_file="$feature_dir/tasks.md"
-    shakapawd_check_approval "$tasks_file" "Tasks" "$2" || return 1
+    ziro_check_approval "$tasks_file" "Tasks" "$2" || return 1
 
     echo "✅ Refining tasks for: $feature_name"
     echo ""
@@ -75,15 +75,15 @@ EOF
     echo "$claude_prompt" | claude
 }
 
-shakapawd_tasks() {
+ziro_step() {
     local action=${1:-create}
     local feature_name=${2}
 
-    shakapawd_validate_initialized || return 1
+    ziro_validate_initialized || return 1
 
     case $action in
-        create) shakapawd_tasks_create "$feature_name" "$3" ;;
-        edit) shakapawd_tasks_edit "$feature_name" "$3" ;;
+        create) ziro_step_create "$feature_name" "$3" ;;
+        edit) ziro_step_edit "$feature_name" "$3" ;;
         *) echo "❌ Unknown action: $action"; echo "Available: create, edit"; return 1 ;;
     esac
 }

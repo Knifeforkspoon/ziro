@@ -1,17 +1,17 @@
 #!/usr/bin/env zsh
-# shakapawd design - Create design.md for a feature
+# ziro plan - Create design.md for a feature
 
 source "${0:h}/utils.zsh"
 
-shakapawd_design_create() {
+ziro_plan_create() {
     local feature_name=$1
-    local specs_dir=".shakapawd/specs"
+    local specs_dir=".ziro/specs"
     local feature_dir="$specs_dir/$feature_name"
 
-    shakapawd_validate_feature "$feature_name" "design create" || return 1
+    ziro_validate_feature "$feature_name" "plan create" || return 1
 
     local requirements_file="$feature_dir/requirements.md"
-    shakapawd_check_dependency "$requirements_file" "Requirements" "$2" || return 1
+    ziro_check_dependency "$requirements_file" "Requirements" "$2" || return 1
 
     echo "📐 Creating design for: $feature_name"
     echo ""
@@ -20,7 +20,7 @@ shakapawd_design_create() {
     claude_prompt=$(cat <<EOF
 You are guiding the creation of a technical design using the Shakapawd process.
 
-Read .shakapawd/GETTING_STARTED.md for process guidance.
+Read .ziro/GETTING_STARTED.md for process guidance.
 Read $feature_dir/requirements.md for context on this feature.
 
 Help the user create a design.md file for: **$feature_name**
@@ -40,15 +40,15 @@ EOF
     echo "$claude_prompt" | claude
 }
 
-shakapawd_design_edit() {
+ziro_plan_edit() {
     local feature_name=$1
-    local specs_dir=".shakapawd/specs"
+    local specs_dir=".ziro/specs"
     local feature_dir="$specs_dir/$feature_name"
 
-    shakapawd_validate_feature "$feature_name" "design edit" || return 1
+    ziro_validate_feature "$feature_name" "plan edit" || return 1
 
     local design_file="$feature_dir/design.md"
-    shakapawd_check_approval "$design_file" "Design" "$2" || return 1
+    ziro_check_approval "$design_file" "Design" "$2" || return 1
 
     echo "📐 Refining design for: $feature_name"
     echo ""
@@ -75,15 +75,15 @@ EOF
     echo "$claude_prompt" | claude
 }
 
-shakapawd_design() {
+ziro_plan() {
     local action=${1:-create}
     local feature_name=${2}
 
-    shakapawd_validate_initialized || return 1
+    ziro_validate_initialized || return 1
 
     case $action in
-        create) shakapawd_design_create "$feature_name" "$3" ;;
-        edit) shakapawd_design_edit "$feature_name" "$3" ;;
+        create) ziro_plan_create "$feature_name" "$3" ;;
+        edit) ziro_plan_edit "$feature_name" "$3" ;;
         *) echo "❌ Unknown action: $action"; echo "Available: create, edit"; return 1 ;;
     esac
 }

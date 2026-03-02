@@ -1,20 +1,20 @@
-# Shakapawd - Spec-Driven Development System
+# Ziro - Zero-Friction Spec-Driven Development
 
-Shakapawd is a spec-driven development system for building features systematically using structured templates and Claude Code. It's adapted from Amazon's Kiro system and customized for modern web applications.
+Ziro is a zero-friction spec-driven development system for building features systematically using structured templates and Claude Code. It's adapted from Amazon's Kiro system and customized for modern web applications.
 
-## What is Shakapawd?
+## What is Ziro?
 
-Shakapawd guides you through three phases when building features:
-1. **Requirements** - What needs to be built (user stories, acceptance criteria)
-2. **Design** - How it will be built (architecture, components, data models)
-3. **Tasks** - Step-by-step implementation plan (actionable coding checklist)
+Ziro guides you through three phases when building features:
+1. **Requirements** (req) - What needs to be built (user stories, acceptance criteria)
+2. **Design** (plan) - How it will be built (architecture, components, data models)
+3. **Tasks** (step) - Step-by-step implementation plan (actionable coding checklist)
 
 Instead of jumping straight into code, you plan everything out first. Each phase requires explicit approval before moving to the next.
 
 ## Directory Structure
 
 ```
-.shakapawed/
+.ziro/
 ├── specs/                              # Feature specifications
 │   └── {feature-name}/                 # Individual feature folder
 │       ├── requirements.md             # What needs to be built
@@ -73,25 +73,31 @@ The front-end templates are customized for **SvelteKit** projects with the follo
 - **Zod** - Validation
 - **Vitest** - Testing
 
-## Oh-My-Zsh Plugin
+## CLI Commands
 
-Shakapawd includes a **Zsh shell plugin** that integrates spec-driven development directly into your terminal. The plugin provides commands to:
-- Initialize Shakapawd in any project
-- Create and manage features
-- Edit specs with your preferred editor
-- Execute implementation tasks with human-in-the-loop automation
-- Track progress across features
+Ziro provides a streamlined CLI for spec-driven development:
 
-See the **[Plugin Documentation](./plugin/PLUGIN_README.md)** for installation and usage.
+```bash
+ziro init [template]      # Initialize ziro in current repo
+ziro req [create|edit]    # Gather/refine requirements
+ziro plan [create|edit]   # Architectural design phase
+ziro step [create|edit]   # Generate implementation tasks
+ziro ralph [start|stop]   # Start/stop "The Wiggum Loop" (implementation)
+ziro go [name]            # Resume implementation from last incomplete task
+ziro status [name]        # Show current progress
+ziro ls                   # List all feature specs and their status
+```
+
+See the **[Plugin Documentation](./plugin/PLUGIN_README.md)** for detailed CLI usage and examples.
 
 ## Documentation
 
-For detailed information about Shakapawd, see:
+For detailed information about Ziro, see:
 
-- **[System Overview](./docs/SHAKAPAWD_SYSTEM_OVERVIEW.md)** - Complete system architecture, templates, and workflows
-- **[How Kiro Works](./docs/how_kiro_works.md)** - Understanding the Kiro methodology that Shakapawd is based on
+- **[System Overview](./docs/ZIRO_SYSTEM_OVERVIEW.md)** - Complete system architecture, templates, and workflows
+- **[How Kiro Works](./docs/how_kiro_works.md)** - Understanding the Kiro methodology that Ziro is based on
 - **[Claude Code + Kiro Integration](./docs/claude_agnostic.md)** - Guide for integrating Kiro system into your project's CLAUDE.md
 
 ---
 
-*Shakapawd: Systematic feature development through structured specs and templates.*
+*Ziro: Zero-friction spec-driven development through structured templates and Claude Code.*

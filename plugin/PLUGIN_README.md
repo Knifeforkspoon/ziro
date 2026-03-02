@@ -1,27 +1,20 @@
-# Shakapawd Oh-My-Zsh Plugin
+# Ziro Command-Line Interface
 
-Integrate Shakapawd spec-driven development into your shell for seamless feature development with human-in-the-loop automation.
+Zero-friction spec-driven development directly from your shell, with human-in-the-loop automation.
 
 ## Installation
 
-### 1. Clone the Plugin
+### 1. Install Ziro CLI
 
 ```bash
-git clone https://github.com/shakalabs/shakapawd.git \
-    ~/.oh-my-zsh/custom/plugins/shakapawd
+# Install via your preferred method
+# (installation instructions to be added)
 ```
 
-### 2. Add to `.zshrc`
+### 2. Verify Installation
 
 ```bash
-# In ~/.zshrc, add 'shakapawd' to your plugins list:
-plugins=(... shakapawd)
-```
-
-### 3. Reload Shell
-
-```bash
-source ~/.zshrc
+ziro --help
 ```
 
 ## Usage
@@ -30,17 +23,17 @@ source ~/.zshrc
 
 ```bash
 cd my-project
-shakapawd init                    # Prompts to choose template
-shakapawd init front-end          # Initialize with front-end templates directly
-shakapawd init back-end           # Initialize with back-end templates
+ziro init                    # Prompts to choose template
+ziro init front-end          # Initialize with front-end templates directly
+ziro init back-end           # Initialize with back-end templates
 ```
 
 If you specify an invalid template:
 ```bash
-shakapawd init invalid-template
+ziro init invalid-template
 # ❌ Template 'invalid-template' not found
 #
-# 📦 Select template for Shakapawd initialization
+# 📦 Select template for Ziro initialization
 #
 #   1) front-end
 #   2) back-end
@@ -48,7 +41,7 @@ shakapawd init invalid-template
 # Select template (1-2):
 ```
 
-Creates `.shakapawd/` directory with:
+Creates `.ziro/` directory with:
 - `specs/` - Feature specifications
 - `templates/` - Spec templates
 - Documentation
@@ -56,32 +49,45 @@ Creates `.shakapawd/` directory with:
 ### Create a Feature
 
 ```bash
-shakapawd feature create tower-search
+ziro req create tower-search
 ```
 
-Creates feature directory with:
-- `requirements.md` - What to build
-- `design.md` - How to build it
-- `tasks.md` - Implementation tasks (Claude updates this with checkmarks)
+Creates feature directory with `requirements.md`:
+- `requirements.md` - What to build (created by `req create` with Claude's help)
 
-### Edit Feature Specs
+Then proceed to create other specs:
+- `design.md` - Created by `ziro plan create` (How to build it)
+- `tasks.md` - Created by `ziro step create` (Implementation tasks)
+
+### Edit/Refine Feature Specs
 
 ```bash
-# Edit requirements
-shakapawd feature edit tower-search    # Opens menu to choose file
+# Edit requirements (blocked if already approved, use --force to bypass)
+ziro req edit tower-search
 
-# Or directly edit specific files
-shakapawd design tower-search          # Edit design.md
-shakapawd tasks tower-search           # Edit tasks.md
+# Create design (requires requirements to be approved)
+ziro plan create tower-search
+
+# Edit design (blocked if already approved, use --force to bypass)
+ziro plan edit tower-search
+
+# Create tasks (requires design to be approved)
+ziro step create tower-search
+
+# Edit tasks (blocked if already approved, use --force to bypass)
+ziro step edit tower-search
+
+# Force override approval checks
+ziro plan create tower-search --force
 ```
 
 ### List All Features
 
 ```bash
-shakapawd list
+ziro ls
 
 # Output:
-# 📋 Shakapawd Features
+# 📋 Ziro Features
 #
 #   • tower-search           [R:✓ D:◐ T:❌] 0/25
 #   • user-auth              [R:✓ D:✓ T:✓]  3/15
@@ -93,22 +99,22 @@ shakapawd list
 ### Build / Implement Feature
 
 ```bash
-# Start implementation from task 1.1
-shakapawd build start tower-search
+# Start "The Wiggum Loop" (implementation) from task 1.1
+ziro ralph start tower-search
 
 # Resume from last incomplete task
-shakapawd build resume tower-search
+ziro go tower-search
 
 # Check implementation status
-shakapawd build status tower-search
+ziro status tower-search
 
 # Stop/pause implementation
-shakapawd build stop tower-search
+ziro ralph stop tower-search
 ```
 
-## Build Process
+## The Wiggum Loop
 
-When you run `shakapawd build start [feature]`:
+When you run `ziro ralph start [feature]`:
 
 1. **Reads** all spec files (requirements.md, design.md, tasks.md)
 2. **For each incomplete task**:
@@ -124,76 +130,86 @@ When you run `shakapawd build start [feature]`:
    - Moves to next task
 3. **Completes** when all tasks done
 
+**"I'm helping!"** - The Wiggum Loop keeps you in control while Claude does the heavy lifting.
+
 ## Tab Completion
 
-The plugin includes zsh completion:
+The CLI includes completion:
 
 ```bash
-shakapawd <TAB>                  # Shows: init, feature, design, tasks, build, list, help
-shakapawd feature <TAB>          # Shows: create, edit, delete
-shakapawd feature create <TAB>   # Shows existing feature names
-shakapawd build start <TAB>      # Shows feature names
+ziro <TAB>                     # Shows: init, req, plan, step, ralph, go, status, ls, help
+ziro req <TAB>                 # Shows: create, edit
+ziro req create <TAB>          # Shows existing feature names and --force
+ziro plan <TAB>                # Shows: create, edit
+ziro plan create <TAB>         # Shows existing feature names and --force
+ziro step <TAB>                # Shows: create, edit
+ziro step create <TAB>         # Shows existing feature names and --force
+ziro ralph <TAB>               # Shows: start, stop
+ziro ralph start <TAB>         # Shows feature names
+ziro go <TAB>                  # Shows feature names
 ```
 
 ## Commands Reference
 
 ```bash
 # Initialization
-shakapawd init [template]                   # Initialize repo
-                                            # template: front-end (default), back-end
+ziro init [template]                    # Initialize repo (zero-config)
+                                        # template: front-end (default), back-end
 
-# Feature Management
-shakapawd feature create [name]             # Create new feature
-shakapawd feature edit [name]               # Edit feature (choose file)
-shakapawd feature delete [name]             # Delete feature
+# Requirements Phase (Zero ambiguity)
+ziro req create [name] [--force]        # Gather requirements with Claude
+ziro req edit [name] [--force]          # Refine requirements (blocked if approved)
 
-# Spec Editing
-shakapawd design [name]                     # Edit design.md
-shakapawd tasks [name]                      # Edit tasks.md
+# Design Phase (The Kiro path)
+ziro plan create [name] [--force]       # Create design (requires approved requirements)
+ziro plan edit [name] [--force]         # Edit design (blocked if approved)
 
-# Implementation
-shakapawd build start [name]                # Start from task 1.1
-shakapawd build resume [name]               # Resume from last task
-shakapawd build stop [name]                 # Pause implementation
-shakapawd build status [name]               # Show progress
+# Tasks Phase (Zero wasted effort)
+ziro step create [name] [--force]       # Generate implementation tasks
+ziro step edit [name] [--force]         # Edit tasks (blocked if approved)
+
+# Implementation (The Wiggum Loop)
+ziro ralph start [name]                 # "I'm helping!" - Start implementation
+ziro ralph stop [name]                  # Pause implementation
+ziro go [name]                          # Resume from last incomplete task
+ziro status [name]                      # Show implementation progress
 
 # Utility
-shakapawd list                              # List all features
-shakapawd help                              # Show help
+ziro ls                                 # List all feature specs and status
+ziro help                               # Show help
 ```
+
+**Note**: Use `--force` to skip approval checks (e.g., edit an approved phase).
 
 ## Workflow Example
 
 ```bash
 # 1. Initialize project
 cd my-sveltekit-app
-shakapawd init                   # Select template when prompted
+ziro init                        # Select template when prompted
 # Or specify directly:
-shakapawd init front-end
+ziro init front-end
 
-# 2. Create feature
-shakapawd feature create tower-search
-
-# 3. Write requirements
-shakapawd design tower-search    # Opens editor for requirements.md
-# ... fill in user stories, acceptance criteria, etc.
+# 2. Gather requirements
+ziro req create tower-search
+# ... Claude guides you through gathering requirements
 # ... get stakeholder approval
 # ... mark as Approved in requirements.md
 
-# 4. Write design
-shakapawd design tower-search    # Opens editor for design.md
-# ... write technical design, architecture, components
+# 3. Create architectural design
+ziro plan create tower-search
+# ... Claude guides you through technical design
 # ... get tech lead approval
 # ... mark as Approved in design.md
 
-# 5. Write tasks
-shakapawd tasks tower-search     # Opens editor for tasks.md
-# ... break into implementation tasks
+# 4. Generate implementation tasks
+ziro step create tower-search
+# ... Claude breaks design into implementation tasks
 # ... get team approval
 # ... mark as Approved in tasks.md
 
-# 6. Implement
-shakapawd build start tower-search
+# 5. Start "The Wiggum Loop"
+ziro ralph start tower-search
 # ... Claude implements task 1.1
 # ... You review and approve
 # ... Claude implements task 1.2
@@ -201,66 +217,66 @@ shakapawd build start tower-search
 # ... (repeat for all tasks)
 # ... Feature complete!
 
-# 7. Check progress
-shakapawd list                   # Shows: tower-search [R:✓ D:✓ T:✓] 25/25
+# 6. Check progress
+ziro ls                          # Shows: tower-search [R:✓ D:✓ T:✓] 25/25
+
+# 7. Resume later if needed
+ziro go tower-search             # Pick up where you left off
 ```
 
 ## Features
 
-✅ **Easy Initialization** - `shakapawd init` in any repo
+✅ **Zero-Config** - `ziro init` in any repo to get started
 ✅ **Template Management** - Front-end templates built-in, back-end coming
-✅ **Feature Lifecycle** - Create, edit, delete features
-✅ **Spec Editing** - Direct access to requirements, design, tasks
-✅ **Automated Build** - Human-in-the-loop implementation with Claude
-✅ **Tab Completion** - Full zsh completion support
-✅ **Progress Tracking** - See spec phases and implementation status
-✅ **Session Continuity** - Resume builds where you left off
+✅ **Spec Lifecycle** - Create, edit, refine requirements, design, tasks
+✅ **Claude Integration** - Gather requirements, design architecture, generate tasks
+✅ **The Wiggum Loop** - Human-in-the-loop implementation automation
+✅ **CLI Completion** - Full shell completion support
+✅ **Progress Tracking** - See spec phases and implementation status at a glance
+✅ **Session Continuity** - Resume with `ziro go` where you left off
 
 ## How It Works with Claude
 
-When you run `shakapawd build`, the plugin:
+When you run `ziro ralph start`, Ziro:
 
 1. Reads your feature specs (requirements, design, tasks)
 2. Sends task description to Claude with full context
 3. Claude implements the task (creates files in `./src/`)
 4. Claude updates feature memory (`.context.md`) with what it did
-5. Plugin shows you what was implemented
+5. Ziro shows you what was implemented
 6. You approve or request changes
 7. When approved, task marked complete, memory updated
 8. Moves to next task
 
-**Key**: The plugin orchestrates the Shakapawd process. Claude follows the specs you've already written.
+**Key**: Ziro orchestrates the spec-driven process. Claude follows the specs you've already written. You stay in control.
 
 ## Requirements
 
-- **Oh-My-Zsh** installed
 - **Claude Code CLI** in PATH (for implementation)
   - Install: https://claude.com/claude-code
-- **Zsh shell**
+- **Shell support**: Zsh, Bash, or your preferred shell
+- **Git** for version control
 
 ## Troubleshooting
 
-### Plugin not loading
+### CLI not found
 
 ```bash
-# Check if plugin directory exists
-ls ~/.oh-my-zsh/custom/plugins/shakapawd
+# Verify ziro command is installed
+which ziro
 
-# Verify in ~/.zshrc
-grep shakapawd ~/.zshrc
-
-# Reload
-source ~/.zshrc
+# If not found, install Ziro:
+# (installation instructions to be added)
 ```
 
 ### Tab completion not working
 
 ```bash
-# Reload zsh
-exec zsh
+# Reload your shell
+exec zsh  # or exec bash, etc.
 ```
 
-### Build fails with "Claude Code CLI not found"
+### Implementation fails with "Claude Code CLI not found"
 
 ```bash
 # Ensure claude command is in PATH
@@ -273,10 +289,11 @@ which claude
 ## Tips
 
 - **Keep specs focused** - One feature per spec directory
-- **Complete phases before building** - Requirements → Design → Tasks approval
-- **Review implementation** - Don't auto-approve, check Claude's work
+- **Complete phases before the loop** - Requirements → Design → Tasks approval
+- **Review implementation** - Use `ziro status` to check progress, don't auto-approve
 - **Use `.context.md`** - Track decisions and blockers for next developer
 - **Commit frequently** - After each approved task, commit to git
+- **Resume with `ziro go`** - Pick up where you left off anytime
 
 ## Future Enhancements
 
@@ -290,8 +307,8 @@ which claude
 
 ## Questions?
 
-See main repo: https://github.com/shakalabs/shakapawd
+See main repo: https://github.com/shakalabs/ziro
 
 ---
 
-*Shakapawd Plugin: Spec-driven development automation for Oh-My-Zsh*
+*Ziro: Zero-friction spec-driven development with "The Wiggum Loop"*
