@@ -46,40 +46,47 @@ Creates `.ziro/` directory with:
 - `templates/` - Spec templates
 - Documentation
 
-### Create a Feature
+### Gather Requirements
 
 ```bash
-ziro req create tower-search
+# Create or continue gathering requirements (transparent - no create/edit distinction)
+ziro req tower-search
 ```
 
-Creates feature directory with `requirements.md`:
-- `requirements.md` - What to build (created by `req create` with Claude's help)
+Creates feature directory and `requirements.md`:
+- Automatically creates if missing (starts gathering)
+- Continues if exists and not approved (refines existing)
+- Errors if approved (use --force to override)
 
-Then proceed to create other specs:
-- `design.md` - Created by `ziro plan create` (How to build it)
-- `tasks.md` - Created by `ziro step create` (Implementation tasks)
-
-### Edit/Refine Feature Specs
+### Create Architectural Design
 
 ```bash
-# Edit requirements (blocked if already approved, use --force to bypass)
-ziro req edit tower-search
+# Create or refine design (requires approved requirements)
+ziro plan tower-search
 
-# Create design (requires requirements to be approved)
-ziro plan create tower-search
-
-# Edit design (blocked if already approved, use --force to bypass)
-ziro plan edit tower-search
-
-# Create tasks (requires design to be approved)
-ziro step create tower-search
-
-# Edit tasks (blocked if already approved, use --force to bypass)
-ziro step edit tower-search
-
-# Force override approval checks
-ziro plan create tower-search --force
+# Force update even if already approved
+ziro plan tower-search --force
 ```
+
+Requirements must be approved first. Creates or continues `design.md`:
+- Automatically creates if missing (starts architectural design)
+- Continues if exists and not approved (refines existing)
+- Errors if approved (use --force to override)
+
+### Generate Implementation Tasks
+
+```bash
+# Create or refine tasks (requires approved design)
+ziro step tower-search
+
+# Force update even if already approved
+ziro step tower-search --force
+```
+
+Design must be approved first. Creates or continues `tasks.md`:
+- Automatically creates if missing (starts task generation)
+- Continues if exists and not approved (refines existing)
+- Errors if approved (use --force to override)
 
 ### List All Features
 
@@ -138,41 +145,36 @@ The CLI includes completion:
 
 ```bash
 ziro <TAB>                     # Shows: init, req, plan, step, ralph, go, status, ls, help
-ziro req <TAB>                 # Shows: create, edit
-ziro req create <TAB>          # Shows existing feature names and --force
-ziro plan <TAB>                # Shows: create, edit
-ziro plan create <TAB>         # Shows existing feature names and --force
-ziro step <TAB>                # Shows: create, edit
-ziro step create <TAB>         # Shows existing feature names and --force
+ziro req <TAB>                 # Shows existing feature names and --force
+ziro plan <TAB>                # Shows existing feature names and --force
+ziro step <TAB>                # Shows existing feature names and --force
 ziro ralph <TAB>               # Shows: start, stop
 ziro ralph start <TAB>         # Shows feature names
 ziro go <TAB>                  # Shows feature names
+ziro status <TAB>              # Shows feature names
 ```
 
 ## Commands Reference
 
 ```bash
 # Initialization
-ziro init [template]                    # Initialize repo (zero-config)
-                                        # template: front-end (default), back-end
+ziro init [template]            # Initialize repo (zero-config)
+                                # template: front-end (default), back-end
 
 # Requirements Phase (Zero ambiguity)
-ziro req create [name] [--force]        # Gather requirements with Claude
-ziro req edit [name] [--force]          # Refine requirements (blocked if approved)
+ziro req [name] [--force]       # Gather/refine requirements (transparent create/continue)
 
 # Design Phase (The Kiro path)
-ziro plan create [name] [--force]       # Create design (requires approved requirements)
-ziro plan edit [name] [--force]         # Edit design (blocked if approved)
+ziro plan [name] [--force]      # Create/refine design (requires approved requirements)
 
 # Tasks Phase (Zero wasted effort)
-ziro step create [name] [--force]       # Generate implementation tasks
-ziro step edit [name] [--force]         # Edit tasks (blocked if approved)
+ziro step [name] [--force]      # Generate/refine tasks (requires approved design)
 
 # Implementation (The Wiggum Loop)
-ziro ralph start [name]                 # "I'm helping!" - Start implementation
-ziro ralph stop [name]                  # Pause implementation
-ziro go [name]                          # Resume from last incomplete task
-ziro status [name]                      # Show implementation progress
+ziro ralph start [name]         # "I'm helping!" - Start implementation
+ziro ralph stop [name]          # Pause implementation
+ziro go [name]                  # Resume from last incomplete task
+ziro status [name]              # Show implementation progress
 
 # Utility
 ziro ls                                 # List all feature specs and status
@@ -190,20 +192,20 @@ ziro init                        # Select template when prompted
 # Or specify directly:
 ziro init front-end
 
-# 2. Gather requirements
-ziro req create tower-search
+# 2. Gather requirements (transparently creates and continues)
+ziro req tower-search
 # ... Claude guides you through gathering requirements
 # ... get stakeholder approval
 # ... mark as Approved in requirements.md
 
-# 3. Create architectural design
-ziro plan create tower-search
+# 3. Create architectural design (transparently creates and continues)
+ziro plan tower-search
 # ... Claude guides you through technical design
 # ... get tech lead approval
 # ... mark as Approved in design.md
 
-# 4. Generate implementation tasks
-ziro step create tower-search
+# 4. Generate implementation tasks (transparently creates and continues)
+ziro step tower-search
 # ... Claude breaks design into implementation tasks
 # ... get team approval
 # ... mark as Approved in tasks.md
@@ -222,18 +224,22 @@ ziro ls                          # Shows: tower-search [R:✓ D:✓ T:✓] 25/25
 
 # 7. Resume later if needed
 ziro go tower-search             # Pick up where you left off
+
+# 8. Update specs with --force if needed
+ziro req tower-search --force    # Override approval to refine requirements
+ziro plan tower-search --force   # Override approval to refine design
 ```
 
 ## Features
 
-✅ **Zero-Config** - `ziro init` in any repo to get started
-✅ **Template Management** - Front-end templates built-in, back-end coming
-✅ **Spec Lifecycle** - Create, edit, refine requirements, design, tasks
-✅ **Claude Integration** - Gather requirements, design architecture, generate tasks
-✅ **The Wiggum Loop** - Human-in-the-loop implementation automation
-✅ **CLI Completion** - Full shell completion support
-✅ **Progress Tracking** - See spec phases and implementation status at a glance
-✅ **Session Continuity** - Resume with `ziro go` where you left off
+- **Zero-Config** - `ziro init` in any repo to get started
+- **Template Management** - Front-end templates built-in, back-end coming
+- **Spec Lifecycle** - Create, edit, refine requirements, design, tasks
+- **Claude Integration** - Gather requirements, design architecture, generate tasks
+- **The Wiggum Loop** - Human-in-the-loop implementation automation
+- **CLI Completion** - Full shell completion support
+- **Progress Tracking** - See spec phases and implementation status at a glance
+- **Session Continuity** - Resume with `ziro go` where you left off
 
 ## How It Works with Claude
 
@@ -307,7 +313,7 @@ which claude
 
 ## Questions?
 
-See main repo: https://github.com/shakalabs/ziro
+See main repo: https://github.com/Knifeforkspoon/ziro
 
 ---
 

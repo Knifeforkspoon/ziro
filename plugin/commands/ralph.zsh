@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# ziro ralph - Start, resume, or stop feature implementation
+# ziro ralph - Start or stop feature implementation
 
 ziro_ralph() {
     local action=${1:-start}
@@ -9,12 +9,12 @@ ziro_ralph() {
 
     # Validate ziro is initialized
     if [[ ! -d "$ziro_dir" ]]; then
-        echo "❌ Shakapawd not initialized. Run: ziro init"
+        echo "❌ Ziro not initialized. Run: ziro init"
         return 1
     fi
 
     if [[ -z "$feature_name" ]]; then
-        echo "❌ Feature name required: ziro build [start|resume|stop|status] [feature-name]"
+        echo "❌ Feature name required: ziro ralph start|stop [feature-name]"
         return 1
     fi
 
@@ -29,18 +29,12 @@ ziro_ralph() {
         start)
             _ziro_ralph_start "$feature_name" "$feature_dir"
             ;;
-        resume)
-            _ziro_ralph_resume "$feature_name" "$feature_dir"
-            ;;
         stop)
             _ziro_ralph_stop "$feature_name" "$feature_dir"
             ;;
-        status)
-            _ziro_ralph_status "$feature_name" "$feature_dir"
-            ;;
         *)
             echo "❌ Unknown action: $action"
-            echo "Available: start, resume, stop, status"
+            echo "Available: start, stop"
             return 1
             ;;
     esac
@@ -151,11 +145,11 @@ _ziro_ralph_loop() {
 
         # Build context for Claude
         local claude_prompt=$(cat <<EOF
-# Feature Implementation - Shakapawd Process
+# Feature Implementation - Ziro Process
 
-You are implementing a feature using the Shakapawd spec-driven development system.
+You are implementing a feature using the Ziro spec-driven development system.
 
-Follow the Shakapawd process defined in this project:
+Follow the Ziro process defined in this project:
 - Read and understand requirements.md, design.md, and tasks.md
 - Implement the current task exactly as specified
 - Create/modify files in ./src/ (not .ziro/)

@@ -1,27 +1,53 @@
 #!/usr/bin/env zsh
-# ziro step - Create tasks.md for a feature
+# ziro step - Generate and refine implementation tasks (transparently creates or continues)
 
 source "${0:h}/utils.zsh"
 
-ziro_step_create() {
+ziro_step() {
     local feature_name=$1
     local specs_dir=".ziro/specs"
     local feature_dir="$specs_dir/$feature_name"
-
-    ziro_validate_feature "$feature_name" "step create" || return 1
-
+    local tasks_file="$feature_dir/tasks.md"
     local design_file="$feature_dir/design.md"
-    ziro_check_dependency "$design_file" "Design" "$2" || return 1
+    local requirements_file="$feature_dir/requirements.md"
 
-    echo "✅ Creating tasks for: $feature_name"
+    ziro_validate_initialized || return 1
+    [[ -z "$feature_name" ]] && echo "❌ Feature name required: ziro step [name]" && return 1
+
+    # Check that design is approved first
+    [[ ! -f "$design_file" ]] && echo "❌ Design not found. Create design first: ziro plan $feature_name" && return 1
+
+    local design_status=$(ziro_get_approval_status "$design_file")
+    [[ "$design_status" != "approved" ]] && echo "❌ Design must be approved first. Approve in: $feature_dir/design.md" && return 1
+
+    # File doesn't exist - create new tasks
+    [[ ! -f "$tasks_file" ]] && _ziro_step_create "$feature_name" "$requirements_file" "$design_file" "$tasks_file" && return 0
+
+    # File exists - check if we can edit it
+    local approval_status=$(ziro_get_approval_status "$tasks_file")
+    [[ "$approval_status" != "approved" ]] && _ziro_step_edit "$feature_name" "$tasks_file" && return 0
+
+    # Approved - check for --force flag
+    ziro_parse_force_flag "$@" || { echo "❌ Tasks already approved. Use --force to edit"; return 1; }
+    echo "⚠️  Tasks already approved - proceeding with --force"
+
+    _ziro_step_edit "$feature_name" "$tasks_file"
+}
+
+_ziro_step_create() {
+    local feature_name=$1
+    local requirements_file=$2
+    local design_file=$3
+    local tasks_file=$4
+
+    echo "✅ Generating implementation tasks: $feature_name"
     echo ""
 
-    local claude_prompt
-    claude_prompt=$(cat <<EOF
-You are guiding the creation of implementation tasks using the Shakapawd process.
+    local claude_prompt=$(cat <<EOF
+You are guiding the creation of implementation tasks using the Ziro process.
 
 Read .ziro/GETTING_STARTED.md for process guidance.
-Read $feature_dir/requirements.md and $feature_dir/design.md for context on this feature.
+Read $requirements_file and $design_file for context on this feature.
 
 Help the user create a tasks.md file for: **$feature_name**
 
@@ -40,21 +66,14 @@ EOF
     echo "$claude_prompt" | claude
 }
 
-ziro_step_edit() {
+_ziro_step_edit() {
     local feature_name=$1
-    local specs_dir=".ziro/specs"
-    local feature_dir="$specs_dir/$feature_name"
+    local tasks_file=$2
 
-    ziro_validate_feature "$feature_name" "step edit" || return 1
-
-    local tasks_file="$feature_dir/tasks.md"
-    ziro_check_approval "$tasks_file" "Tasks" "$2" || return 1
-
-    echo "✅ Refining tasks for: $feature_name"
+    echo "✅ Refining implementation tasks: $feature_name"
     echo ""
 
-    local claude_prompt
-    claude_prompt=$(cat <<EOF
+    local claude_prompt=$(cat <<EOF
 You are helping refine and improve the tasks for: **$feature_name**
 
 Current tasks:
@@ -73,17 +92,4 @@ EOF
 )
 
     echo "$claude_prompt" | claude
-}
-
-ziro_step() {
-    local action=${1:-create}
-    local feature_name=${2}
-
-    ziro_validate_initialized || return 1
-
-    case $action in
-        create) ziro_step_create "$feature_name" "$3" ;;
-        edit) ziro_step_edit "$feature_name" "$3" ;;
-        *) echo "❌ Unknown action: $action"; echo "Available: create, edit"; return 1 ;;
-    esac
 }

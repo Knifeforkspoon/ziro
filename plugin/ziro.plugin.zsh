@@ -20,14 +20,8 @@ ziro() {
         init)
             ziro_init "$@"
             ;;
-        req)
-            ziro_req "$@"
-            ;;
-        plan)
-            ziro_plan "$@"
-            ;;
-        step)
-            ziro_step "$@"
+        req|plan|step)
+            ziro_$command "$@"
             ;;
         ralph)
             ziro_ralph "$@"
@@ -59,26 +53,29 @@ USAGE:
     ziro <command> [options]
 
 COMMANDS:
-    init [template]      Initialize ziro in current repo (zero-config)
+    init [template]                Initialize ziro in current repo (zero-config)
 
-    req [create|edit]    Gather/Refine requirements (Zero ambiguity)
-    plan [create|edit]   Architectural design phase (The Kiro path)
-    step [create|edit]   Generate implementation tasks (Zero wasted effort)
+    req [name] [--force]           Gather/refine requirements (transparently creates or continues)
+    plan [name] [--force]          Architectural design phase (requires approved requirements)
+    step [name] [--force]          Generate implementation tasks (requires approved design)
 
-    ralph [start|stop]   Start/Stop the implementation loop (The Wiggum Loop)
-    go [name]            Resume implementation from last incomplete task
-    status [name]        Show current progress of the Ralph loop
+    ralph start|stop [name]        Start/stop the implementation loop (The Wiggum Loop)
+    go [name]                      Resume implementation from last incomplete task
+    status [name]                  Show current progress of the Ralph loop
 
-    ls                   List all feature specs and their current status
-    help                 Show this message
+    ls                             List all feature specs and their current status
+    help                           Show this message
 
 EXAMPLES:
     ziro init front-end
-    ziro req create tower-search    # Claude guides requirements gathering
-    ziro plan create tower-search   # Generates technical design
-    ziro step create tower-search   # Breaks design into actionable tasks
-    ziro ralph start tower-search   # "I'm helping!" - Starts implementation
-    ziro go tower-search            # Resumes the loop
+    ziro req tower-search              # Gather or refine requirements
+    ziro plan tower-search             # Create or refine architectural design
+    ziro step tower-search             # Generate or refine implementation tasks
+    ziro req tower-search --force      # Override approval to refine requirements
+    ziro ralph start tower-search      # "I'm helping!" - Start The Wiggum Loop
+    ziro go tower-search               # Resume from last incomplete task
+    ziro status tower-search           # Check implementation progress
+    ziro ls                            # List all features and status
 
 For more info: https://github.com/shakalabs/ziro
 EOF

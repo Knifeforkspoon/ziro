@@ -20,7 +20,7 @@ ziro_list() {
     if ! ls -1 "$specs_dir" 2>/dev/null | grep -v "^\.gitkeep$" | grep -q .; then
         echo "📭 No features found"
         echo ""
-        echo "Create one: ziro req create [name]"
+        echo "Create one: ziro req [name]"
         return 0
     fi
 
@@ -86,7 +86,9 @@ ziro_list() {
     echo "        ✓=Approved  ◐=Draft  ❌=Not Started"
     echo ""
     echo "Commands:"
-    echo "  ziro req create [name]      - Gather requirements"
-    echo "  ziro plan create [name]     - Create design"
+    echo "  ziro req [name]             - Gather/refine requirements"
+    echo "  ziro plan [name]            - Create/refine design"
+    echo "  ziro step [name]            - Generate/refine tasks"
     echo "  ziro ralph start [name]     - Start implementation"
+    echo "  ziro go [name]              - Resume from last task"
 }

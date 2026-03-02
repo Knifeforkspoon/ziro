@@ -47,25 +47,9 @@ _ziro_completion() {
         init)
             _ziro_compreply "$(_ziro_get_templates)" "$cur"
             ;;
-        req)
-            case "${words[2]}" in
-                create|edit)
-                    _ziro_compreply "$(_ziro_get_features) --force" "$cur"
-                    ;;
-                *)
-                    _ziro_compreply "create edit" "$cur"
-                    ;;
-            esac
-            ;;
-        plan|step)
-            case "${words[2]}" in
-                create|edit)
-                    _ziro_compreply "$(_ziro_get_features) --force" "$cur"
-                    ;;
-                *)
-                    _ziro_compreply "create edit" "$cur"
-                    ;;
-            esac
+        req|plan|step)
+            # For req/plan/step, complete with feature names and --force flag
+            _ziro_compreply "$(_ziro_get_features) --force" "$cur"
             ;;
         ralph)
             case "${words[2]}" in

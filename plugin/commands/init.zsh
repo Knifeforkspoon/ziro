@@ -155,6 +155,6 @@ ziro_init() {
     echo ""
     echo "📖 Next steps:"
     echo "   1. Read: $ziro_dir/GETTING_STARTED.md"
-    echo "   2. Create feature: ziro req create my-feature"
+    echo "   2. Create feature: ziro req my-feature"
     echo "   3. View templates: ls -la $templates_dir/"
 }
